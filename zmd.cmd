@@ -28,7 +28,7 @@ if exist %locales%\%language%.cmd (
 
 :: Welcome Prompt Function
 :welcome
-echo %welcome%
+echo %i18nWelcome%
 goto command
 
 :: Command Handler Function
@@ -38,15 +38,17 @@ echo.
 echo ┌──(%USERNAME%@%ComputerName%)-[~%CD%]
 set /p input="└─$ "
 title ZMD - %input%
-if exist %core%\builtins\%input%.builtin.cmd (
-    call %core%\builtins\%input%.builtin.cmd
+if exist %core%\builtins\%input%\ (
+    echo.
+    call %core%\builtins\%input%\index.cmd
     goto command
 ) else (
-    if exist %addons%\plugins\%input%.plugin.cmd (
-        call %addons%\plugins\%input%.plugin.cmd
+    if exist %addons%\plugins\%input%\index.cmd (
+        echo.
+        call %addons%\plugins\%input%\index.cmd
         goto command
     ) else (
-        echo %invalidCommand%
+        echo %i18nInvalidCommand%
         goto command
     )
 )

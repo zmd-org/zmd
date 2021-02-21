@@ -1,0 +1,4 @@
+Name: help
+Description: Displays all valid ZMD commands, and fetches info about specific commands.
+Usage: help (command name)
+Author: Beef
