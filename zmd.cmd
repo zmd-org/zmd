@@ -33,17 +33,18 @@ goto command
 
 :: Command Handler Function
 :command
+setlocal DisableDelayedExpansion
 title ZMD
 echo.
 echo ┌──(%USERNAME%@%ComputerName%)-[~%CD%]
 set /p input="└─$ "
 title ZMD - %input%
-if exist %core%\builtins\%input%\%input%.manifest (
+if exist %core%\builtins\%input%\*.manifest (
     echo.
     call %core%\builtins\%input%\index.cmd
     goto command
 ) else (
-    if exist %addons%\plugins\%input%\%input%.manifest (
+    if exist %addons%\plugins\%input%\*.manifest (
         echo.
         call %addons%\plugins\%input%\index.cmd
         goto command
