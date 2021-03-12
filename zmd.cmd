@@ -9,7 +9,7 @@
 chcp 65001 >NUL
 
 :: Variables
-@set maindir=%userprofile%\Documents\GitHub\zmd
+@set maindir=%~dp0
 @set addons=%maindir%\addons
 @set core=%maindir%\core
 @set locales=%maindir%\locales
@@ -38,12 +38,12 @@ echo.
 echo ┌──(%USERNAME%@%ComputerName%)-[~%CD%]
 set /p input="└─$ "
 title ZMD - %input%
-if exist %core%\builtins\%input%\ (
+if exist %core%\builtins\%input%\%input%.manifest (
     echo.
     call %core%\builtins\%input%\index.cmd
     goto command
 ) else (
-    if exist %addons%\plugins\%input%\index.cmd (
+    if exist %addons%\plugins\%input%\%input%.manifest (
         echo.
         call %addons%\plugins\%input%\index.cmd
         goto command
