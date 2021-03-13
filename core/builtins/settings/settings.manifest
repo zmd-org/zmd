@@ -1,0 +1,5 @@
+settings
+PrettyName: settings
+Description: Allows you to change ZMD settings.
+Usage: settings (setting)
+Author: rem

@@ -9,16 +9,35 @@
 chcp 65001 >NUL
 
 :: Variables
+
+:: We use %~dp0 here to account for whatever directory ZMD is running in - this will always specify the script directory.
 @set maindir=%~dp0
 @set addons=%maindir%\addons
 @set core=%maindir%\core
+:: Convenience™
+@set api=%core%\api
+@set functions=%core%\functions
 @set locales=%maindir%\locales
-@set language=en-gb
 
-:i18n
+:: Check if the user folder exists - if not, create one.
+if NOT exist %maindir%\user (
+    md %maindir%\user\
+)
+@set userFolder=%maindir%\user
+
+:configHandler
+if NOT exist %userFolder%\config.cmd (
+    call %functions%\saveConfig.cmd
+    call %userFolder%\config.cmd
+) ELSE (
+    set userFolder=%maindir%\user
+    call %userFolder%\config.cmd
+)
+
+:i18nHandler
 if exist %locales%\%language%.cmd (
     call %locales%\%language%.cmd
-    goto welcome
+    goto welcomePrompt
 ) else (
     echo [Internal error] Language file invalid.
     echo Press any key to close the program.
@@ -27,7 +46,7 @@ if exist %locales%\%language%.cmd (
 )
 
 :: Welcome Prompt Function
-:welcome
+:welcomePrompt
 echo %i18nWelcome%
 goto command
 
