@@ -9,7 +9,8 @@ set string=%string:l=w%
 set string=%string:r=w%
 set stringResult=%string%
 
+endlocal
 goto :eof
 
 :usage
-echo Usage: owoifyString.cmd (STRING)
+echo Usage: owoifyString.cmd (string)

@@ -25,8 +25,8 @@ for /f ^"usebackq^ eol^=^
         echo %%a
         set /a counter+=1
 )
-
+endlocal
 goto :eof
 
 :usage
-echo Usage: fetchLine.cmd (COUNT) (FILENAME)
+echo Usage: fetchLine.cmd (count) (filename)
