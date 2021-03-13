@@ -1,7 +1,7 @@
 :: Name: help
 :: Description: Displays all valid ZMD commands, and fetches info about specific commands.
 :: Usage: help <command name>
-:: Author: Beef
+:: Author: rem
 
 echo === ZMD %i18nAllCommands% ===
 echo === %i18nBuiltins% ===

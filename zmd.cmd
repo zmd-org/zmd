@@ -33,6 +33,7 @@ goto command
 
 :: Command Handler Function
 :command
+call %locales%\%language%.cmd
 setlocal DisableDelayedExpansion
 title ZMD
 echo.
