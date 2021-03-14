@@ -17,9 +17,12 @@ if %inputSetting%==language (
 )
 
 :language
-echo %i18nChosenSetting%: %setting%
+echo.
+echo %i18nChosenSetting%: %inputSetting%
+echo.
 echo %i18nWhatValue%
 echo %i18nCurrentValue%: %language%
+echo.
 echo %i18nValidValues%:
 for /R %locales% %%f in (*.cmd) do ( 
         echo %%f
