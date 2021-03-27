@@ -1,11 +1,11 @@
-:: ZMD, a Windows command line.
-:: British English translations.
+:: ZMD, una linea de comando para Windows.
+:: Translacion en Español para ZMD
 
-:: Main Program Translations
+:: Traducciones del programa principal
 set i18nWelcome=Bienvenidos a ZMD!
 set i18nInvalidCommand=Este comando no esta valido! Para la lista de Comandos validos, escribe "help".
 
-:: Built-in Command Translations
+:: Traducciones de comandos integradas
 :: "help"
 set i18nAllCommands=Comandos
 set i18nBuiltins=Built-ins
@@ -26,7 +26,7 @@ set i18nValidValues=Valores validos son
 set i18nTypeValue=Escribe un valor aqui
 set i18nInvalidValue=Eso no es un valor valido!
 
-:: API Translations
+:: Translaciones del API
 :: "requestPermissions"
 set i18nSuperUserInitialWarning=El plugin %pluginName% esta solicitando acceso superUser a ZMD.
 set i18nSuperUserSecondaryWarning=Esto significa que el va a tener acceso completo a ***TODO*** acerca de ZMD.
