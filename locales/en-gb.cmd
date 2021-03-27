@@ -25,3 +25,11 @@ set i18nCurrentValue=The current value is
 set i18nValidValues=Valid values are
 set i18nTypeValue=Type a value here
 set i18nInvalidValue=That's not a valid value!
+
+:: API Translations
+:: "requestPermissions"
+set i18nSuperUserInitialWarning=The plugin %pluginName% is requesting superUser access to ZMD.
+set i18nSuperUserSecondaryWarning=This means that the plugin will have full access to ***EVERYTHING*** about ZMD.
+set i18nAreYouSure=Are you sure you'd like to allow this?
+set i18nSuperUserSuccess=%pluginName% was granted superUser permission. Doomsday calls...
+set i18nCancelled=Cancelled.

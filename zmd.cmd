@@ -14,11 +14,11 @@ chcp 65001 >NUL
 @set mainDir=%~dp0
 
 :: Convenience™
-@set addons=%mainDir%\addons
-@set core=%mainDir%\core
+@set addons=%mainDir%addons
+@set core=%mainDir%core
 @set api=%core%\api
 @set functions=%core%\functions
-@set locales=%mainDir%\locales
+@set locales=%mainDir%locales
 
 :: Check if the user folder exists - if not, create one.
 if NOT exist %mainDir%\user (
@@ -40,11 +40,27 @@ if NOT exist %userFolder%\config.cmd (
 :: Check if the current language file actually exists. If yes, then call it. Else, error.
 :i18nHandler
 if exist %locales%\%language%.cmd (
+    if not exist %locales%\en-gb.cmd (
+        echo [Internal error] Backup language file invalid.
+        echo Press any key to close the program.
+        echo We'd recommend re-cloning ZMD.
+        pause >NUL
+        exit
+    )
+    :: Here, we call the backup language file first, as to stop any "ECHO is on." strings being printed when a language entry is invalid.
+    call %locales%\en-gb.cmd
     call %locales%\%language%.cmd
     goto welcomePrompt
 ) else (
+    if not exist %locales%\en-gb.cmd (
+        echo [Internal error] Backup language file invalid.
+        echo Press any key to close the program.
+        echo We'd recommend re-cloning ZMD.
+        pause >NUL
+        exit
+    )
     echo [Internal error] Language file invalid, defaulting to en-gb.
-    call %devkitLocales%\en-gb.cmd
+    call %locales%\en-gb.cmd
     echo.
     goto welcomePrompt
 )
@@ -65,10 +81,13 @@ setlocal DisableDelayedExpansion
 
 :: Set the program title, in case it has been overwritten
 title ZMD
+
 echo.
 echo ┌──(%USERNAME%@%ComputerName%)-[~%CD%]
 set /p input="└─$ "
+
 title ZMD - %input%
+
 if exist %core%\builtins\%input%\*.manifest (
     echo.
     call %core%\builtins\%input%\index.cmd
@@ -76,8 +95,15 @@ if exist %core%\builtins\%input%\*.manifest (
 ) else (
     if exist %addons%\plugins\%input%\*.manifest (
         echo.
-        :: Here, we "sandbox" any plugins that run, making them run locally in their own file.
+        :: Here, we "sandbox" any plugins that run, making them run locally in their own file. However, we do give them some variable access.
         setlocal
+        if exist %userFolder%\addonData\permissions\%input%.cmd (
+            call %userFolder%\addonData\permissions\%input%.cmd
+        )
+        @set api=%~dp0core\api
+        if exist %~dp0user\ (
+            @set userFolder=%~dp0user
+        )
         call %addons%\plugins\%input%\index.cmd
         endlocal
         goto command
