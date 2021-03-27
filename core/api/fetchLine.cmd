@@ -2,8 +2,6 @@
 :: API: fetchLine
 :: Thank you to https://stackoverflow.com/a/130298 for this, I just edited for use in ZMD
 
-@echo off
-
 if [%1] == [] goto usage
 if [%2] == [] goto usage
 

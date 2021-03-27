@@ -9,7 +9,6 @@ set string=%string:l=w%
 set string=%string:r=w%
 set stringResult=%string%
 
-endlocal
 goto :eof
 
 :usage

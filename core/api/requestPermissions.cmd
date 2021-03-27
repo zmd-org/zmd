@@ -7,36 +7,47 @@ if [%2] == [] goto usage
 set pluginName=%1
 set requestedPermission=%2
 
-:: Check if the user folder exists - if not, create one.
-if NOT exist %mainDir%\user (
-    md %mainDir%\user\
+:: Check if the plugin specified is valid, if not, error.
+if NOT exist %addons%\plugins\%pluginName%\%pluginName%.manifest (
+    echo %i18nPluginNotFound%
+    set permissionResult=error
+    goto :eof
 )
 
-@set userFolder=%mainDir%\user
+:: Check if the user folder exists - if not, create one.
+if NOT exist %mainDir%user (
+    md %mainDir%user\
+)
+
+@set userFolder=%mainDir%user
 
 :: Make a folder for plugin permissions and define it
-md %userFolder%\addonData\permissions\
+if NOT exist %userFolder%\addonData\permissions\ (
+    md %userFolder%\addonData\permissions\
+)
 @set permissionsFolder=%userFolder%\addonData\permissions
 
 if %requestedPermission%==superUser (
-    echo %i18nSuperUserInitialWarning%
+    echo %pluginName% %i18nSuperUserInitialWarning%
     echo %i18nSuperUserSecondaryWarning%
     echo %i18nAreYouSure%
-    choice YN
-        if ERRORLEVEL 1 (
-            echo @set superUser=true > %permissionsFolders%\%pluginName%.cmd
-            echo %i18nSuperUserSuccess%
+    set /p choice=""
+        if [%choice%]=="yes" (
+            if NOT exist %permissionsFolder%\%pluginName% (
+                md %permissionsFolder%\%pluginName%\
+            )
+            @set pluginPermissions=%permissionsFolder%\%pluginName%
+            echo [] > %pluginPermissions%\.superUser
+            echo %pluginName% %i18nSuperUserSuccess%
             set permissionResult=true
             goto :eof
-        )
-        if ERRORLEVEL 2 (
+        ) ELSE (
             echo %i18nCancelled%
             set permissionResult=false
             goto :eof
         )
 )
 
-endlocal
 goto :eof
 
 :usage

@@ -25,7 +25,7 @@ if NOT exist %mainDir%\user (
     md %mainDir%\user\
 )
 
-@set userFolder=%mainDir%\user
+@set userFolder=%mainDir%user
 
 :: Check if the config exists - if not, create it!
 :configHandler
@@ -67,6 +67,7 @@ if exist %locales%\%language%.cmd (
 
 :: Welcome Prompt Function
 :welcomePrompt
+echo.
 echo %i18nWelcome%
 goto command
 
@@ -82,33 +83,60 @@ setlocal DisableDelayedExpansion
 :: Set the program title, in case it has been overwritten
 title ZMD
 
+if NOT [%1] == [] (
+    set input=%1
+    goto exec
+)
+
 echo.
 echo ┌──(%USERNAME%@%ComputerName%)-[~%CD%]
 set /p input="└─$ "
+goto exec
 
+:: Execute Command Function
+:exec
 title ZMD - %input%
 
 if exist %core%\builtins\%input%\*.manifest (
     echo.
     call %core%\builtins\%input%\index.cmd
-    goto command
+    goto returner
 ) else (
     if exist %addons%\plugins\%input%\*.manifest (
         echo.
-        :: Here, we "sandbox" any plugins that run, making them run locally in their own file. However, we do give them some variable access.
-        setlocal
-        if exist %userFolder%\addonData\permissions\%input%.cmd (
-            call %userFolder%\addonData\permissions\%input%.cmd
+        @set pluginPermissions=%userFolder%\addonData\permissions\%input%
+        
+        if NOT exist %pluginPermissions%\.superUser (
+            :: Here, we "sandbox" any plugins that do not have superUser, making them run locally in their own file. However, we do give them some variable access.
+            setlocal
+            if exist %userFolder%\addonData\permissions\%input%\ (
+                @set pluginPermissions=%userFolder%\addonData\permissions\%input%
+            )
+            @set mainDir=%~dp0
+            @set api=%~dp0core\api
+            if exist %~dp0user (
+                @set userFolder=%~dp0user
+            )
+            call %addons%\plugins\%input%\index.cmd
+            endlocal
+        ) else (
+            :: If the specified plugin does have superUser, run it like a built-in.
+            call %locales%\%language%.cmd
+            call %addons%\plugins\%input%\index.cmd
         )
-        @set api=%~dp0core\api
-        if exist %~dp0user\ (
-            @set userFolder=%~dp0user
-        )
-        call %addons%\plugins\%input%\index.cmd
-        endlocal
-        goto command
+
+        goto returner
     ) else (
         echo %i18nInvalidCommand%
-        goto command
+        goto returner
     )
 )
+
+:returner
+if NOT [%1] == [] (
+    if NOT [%2] == [] (
+        cmd /c %~dp0zmd.cmd
+    )
+goto :eof
+)
+goto command

@@ -1,0 +1,5 @@
+echotoggle
+PrettyName: echotoggle
+Description: Toggles echo. That's it.
+Usage: echotoggle (BOOLEAN)
+Author: vax

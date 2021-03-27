@@ -8,5 +8,4 @@ set stringResult=%stringResult:1=b%
 set stringResult=%stringResult:2=c%
 set stringResult=%stringResult%
 
-endlocal
 goto :eof

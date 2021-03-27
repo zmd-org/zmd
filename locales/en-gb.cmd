@@ -28,8 +28,9 @@ set i18nInvalidValue=That's not a valid value!
 
 :: API Translations
 :: "requestPermissions"
-set i18nSuperUserInitialWarning=The plugin %pluginName% is requesting superUser access to ZMD.
+set i18nSuperUserInitialWarning=is requesting superUser access to ZMD.
 set i18nSuperUserSecondaryWarning=This means that the plugin will have full access to ***EVERYTHING*** about ZMD.
-set i18nAreYouSure=Are you sure you'd like to allow this?
-set i18nSuperUserSuccess=%pluginName% was granted superUser permission. Doomsday calls...
+set i18nAreYouSure=Are you sure you'd like to allow this? If you are, type "yes" in the box below.
+set i18nSuperUserSuccess=was granted superUser permission. Doomsday calls...
 set i18nCancelled=Cancelled.
+set i18nPluginNotFound=[ERROR] Specified plugin name not valid. If you're not the plugin's developer and you see this, report it to the developer!

@@ -25,7 +25,6 @@ curl -X POST ^
   -d "{\"username\": \"%1\", \"content\": \"%2\"}" ^
   %webhookURL%
 
-endlocal
 goto :eof
 
 :usage
