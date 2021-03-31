@@ -3,7 +3,7 @@
 
 :: Loading Sequence
 :load
-@echo off
+@echo on
 @title ZMD is loading...
 @setlocal ENABLEEXTENSIONS
 chcp 65001 >NUL
@@ -21,8 +21,8 @@ chcp 65001 >NUL
 @set locales=%mainDir%locales
 
 :: Check if the user folder exists - if not, create one.
-if NOT exist %mainDir%\user (
-    md %mainDir%\user\
+if NOT exist %mainDir%user (
+    md %mainDir%user\
 )
 
 @set userFolder=%mainDir%user
@@ -33,7 +33,6 @@ if NOT exist %userFolder%\config.cmd (
     call %functions%\saveConfig.cmd
     call %userFolder%\config.cmd
 ) ELSE (
-    set userFolder=%mainDir%\user
     call %userFolder%\config.cmd
 )
 
@@ -109,13 +108,13 @@ if exist %core%\builtins\%input%\*.manifest (
         if NOT exist %pluginPermissions%\.superUser (
             :: Here, we "sandbox" any plugins that do not have superUser, making them run locally in their own file. However, we do give them some variable access.
             setlocal
-            if exist %userFolder%\addonData\permissions\%input%\ (
-                @set pluginPermissions=%userFolder%\addonData\permissions\%input%
-            )
             @set mainDir=%~dp0
             @set api=%~dp0core\api
             if exist %~dp0user (
                 @set userFolder=%~dp0user
+            )
+            if exist %userFolder%\addonData\permissions\%input%\ (
+                @set pluginPermissions=%userFolder%\addonData\permissions\%input%
             )
             call %addons%\plugins\%input%\index.cmd
             endlocal

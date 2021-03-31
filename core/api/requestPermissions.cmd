@@ -31,8 +31,8 @@ if %requestedPermission%==superUser (
     echo %pluginName% %i18nSuperUserInitialWarning%
     echo %i18nSuperUserSecondaryWarning%
     echo %i18nAreYouSure%
-    set /p choice=""
-        if [%choice%]=="yes" (
+    set /p permissionChoice=" "
+        if [%permissionChoice%]=="yes" (
             if NOT exist %permissionsFolder%\%pluginName% (
                 md %permissionsFolder%\%pluginName%\
             )

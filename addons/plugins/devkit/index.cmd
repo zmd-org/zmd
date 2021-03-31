@@ -9,6 +9,8 @@
 @set devkitComponents=%~dp0components
 @set devkitLocales=%devkitComponents%\locales
 
+call %devkitLocales%\%language%.cmd
+
 :: Request Permissions
 :: Here, we use an API function to request superUser rights. This will probably be changed later to more specific permissions.
 if exist %pluginPermissions%\.superUser (
