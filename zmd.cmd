@@ -3,7 +3,7 @@
 
 :: Loading Sequence
 :load
-@echo on
+@echo off
 @title ZMD is loading...
 @setlocal ENABLEEXTENSIONS
 chcp 65001 >NUL

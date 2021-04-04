@@ -1,0 +1,4 @@
+cmd
+Description: Runs MS-DOS / Command Prompt commands.
+Usage: help (command name)
+Author: rem
